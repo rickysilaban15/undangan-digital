@@ -1,0 +1,1667 @@
+/* =================================================================
+   WEDDING INVITATION — Batak & Catholic theme
+   Palette: Cream/Beige base · Navy accent · Gold touches
+   Fonts:   Great Vibes (script) · Playfair Display / Cinzel (serif)
+            Poppins (sans-serif body)
+   ================================================================= */
+
+/* ---------- 1. DESIGN TOKENS (edit these for new clients) -------- */
+:root {
+  --cream: #f7f1e6;
+  --cream-dark: #efe6d4;
+  --beige: #e8dcc4;
+  --navy: #1c2c4c;
+  --navy-soft: #2c4068;
+  --gold: #c2a25a;
+  --gold-light: #d8bd7e;
+  --ink: #2b2b2b;
+  --muted: #6b6256;
+
+  --font-script: "Great Vibes", cursive;
+  --font-display: "Playfair Display", "Cinzel", serif;
+  --font-accent: "Cinzel", "Playfair Display", serif;
+  --font-body: "Poppins", system-ui, sans-serif;
+
+  --maxw: 1100px;
+  --radius: 18px;
+  --shadow: 0 18px 50px rgba(28, 44, 76, 0.14);
+  --shadow-sm: 0 8px 24px rgba(28, 44, 76, 0.1);
+}
+
+/* ---------- 2. RESET / BASE ------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  /* cegah Android memperbesar teks sembarangan */
+  text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--ink);
+  background: var(--cream);
+  line-height: 1.7;
+  font-weight: 300;
+  position: relative;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Kunci scroll saat cover masih tampil (aman untuk mobile) */
+body.is-locked {
+  overflow: hidden;
+}
+
+/* ---------- REVEAL ON SCROLL (pengganti AOS) -------------------- */
+[data-aos] {
+  opacity: 0;
+  transform: translate3d(0, 36px, 0);
+  filter: blur(6px);
+  transition:
+    opacity 1s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 1.05s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 1s ease;
+  will-change: transform, opacity;
+}
+
+[data-aos="fade-right"] {
+  transform: translate3d(-48px, 0, 0);
+}
+
+[data-aos="fade-left"] {
+  transform: translate3d(48px, 0, 0);
+}
+
+[data-aos="zoom-in"] {
+  transform: scale(0.86) translate3d(0, 18px, 0);
+}
+
+[data-aos="flip-up"] {
+  transform: perspective(900px) rotateX(14deg) translate3d(0, 40px, 0);
+  transform-origin: bottom center;
+}
+
+[data-aos].is-visible {
+  opacity: 1;
+  transform: perspective(900px) translate3d(0, 0, 0) scale(1) rotateX(0);
+  filter: blur(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-aos] {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    transition: none;
+  }
+}
+
+/* ---------- 3. GORGA ORNAMENT (Batak pattern, pure CSS) --------- */
+.gorga-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.10;
+  transform: translateZ(0);
+  /* isolate ke layer sendiri -> tak repaint saat scroll */
+  background-image:
+    repeating-linear-gradient(45deg,
+      var(--gold) 0, var(--gold) 2px, transparent 2px, transparent 14px),
+    repeating-linear-gradient(-45deg,
+      var(--gold) 0, var(--gold) 2px, transparent 2px, transparent 14px),
+    radial-gradient(circle at 50% 50%,
+      transparent 60%, rgba(194, 162, 90, 0.4) 61%, transparent 63%);
+  background-size: 28px 28px, 28px 28px, 40px 40px;
+  mask-image: linear-gradient(to bottom, transparent, #000 12%, #000 88%, transparent);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 12%, #000 88%, transparent);
+}
+
+.gorga-overlay--light {
+  opacity: 0.06;
+}
+
+/* ---------- 4. BUTTONS ------------------------------------------ */
+.btn {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.82rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  padding: 0.85rem 2.1rem;
+  border-radius: 999px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease, color 0.3s ease;
+}
+
+.btn--primary {
+  background: var(--navy);
+  color: var(--cream);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--gold);
+}
+
+.btn--primary:hover {
+  background: var(--navy-soft);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow);
+}
+
+.btn--ghost {
+  background: transparent;
+  color: var(--navy);
+  border: 1px solid var(--gold);
+}
+
+.btn--ghost:hover {
+  background: var(--gold);
+  color: #fff;
+  transform: translateY(-3px);
+}
+
+/* ---------- 5. MUSIC TOGGLE ------------------------------------- */
+.music-toggle {
+  position: fixed;
+  bottom: 22px;
+  right: 22px;
+  z-index: 1000;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 1px solid var(--gold);
+  background: var(--navy);
+  color: var(--gold-light);
+  font-size: 1.3rem;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  display: grid;
+  place-items: center;
+  transition: transform 0.3s ease;
+}
+
+.music-toggle:hover {
+  transform: scale(1.08);
+}
+
+.music-toggle.is-playing .music-icon {
+  animation: spin 4s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ================================================================ */
+/* 6. COVER / AMPLOP (split layout)                                 */
+/* ================================================================ */
+.cover {
+  position: fixed;
+  inset: 0;
+  z-index: 900;
+  display: flex;
+  flex-direction: column;
+  /* mobile-first: stacked */
+  background: var(--cream);
+  transition: opacity 0.6s ease;
+  overflow-y: auto;
+  /* jika konten lebih tinggi dari layar -> bisa di-scroll */
+  overflow-x: hidden;
+  /* cegah splatter/ornamen bocor ke samping */
+  -webkit-overflow-scrolling: touch;
+}
+
+/* --- media (photo) side --- */
+.cover__media {
+  position: relative;
+  flex: 0 0 38vh;
+  min-height: 240px;
+  overflow: hidden;
+}
+
+.cover__photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.cover__media-veil {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom,
+      rgba(28, 44, 76, 0.10) 0%, rgba(247, 241, 230, 0) 40%, rgba(247, 241, 230, 0.85) 100%);
+}
+
+.cover__gold-stroke {
+  position: absolute;
+  inset: 14px;
+  border: 1px solid rgba(216, 189, 126, 0.8);
+  pointer-events: none;
+}
+
+.cover__splatter {
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  width: 180px;
+  height: 180px;
+  background: radial-gradient(circle, rgba(194, 162, 90, 0.35) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* --- text panel side --- */
+.cover__panel {
+  flex: 1 0 auto;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 2.2rem 1.5rem 2.8rem;
+  position: relative;
+}
+
+.cover__panel-inner {
+  max-width: 460px;
+  width: 100%;
+}
+
+.cover__eyebrow {
+  font-family: var(--font-accent);
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  font-size: 0.72rem;
+  color: var(--gold);
+  margin-bottom: 0.8rem;
+}
+
+.cover__invite {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.cover__divider {
+  display: block;
+  width: 56px;
+  height: 2px;
+  margin: 1.2rem auto;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+
+.cover__names {
+  font-family: var(--font-script);
+  color: var(--navy);
+  font-weight: 400;
+  line-height: 1.1;
+  font-size: clamp(2.2rem, 9vw, 3.4rem);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cover__amp {
+  color: var(--gold);
+  font-size: 0.55em;
+  margin: -0.1em 0;
+}
+
+.cover__event {
+  margin: 1.4rem 0;
+}
+
+.cover__date {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  color: var(--navy);
+}
+
+.cover__venue {
+  font-size: 0.82rem;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  margin-top: 0.2rem;
+}
+
+.cover__guest {
+  margin-bottom: 1.6rem;
+}
+
+.cover__guest-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.cover__guest-name {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  color: var(--navy);
+  margin-top: 0.2rem;
+}
+
+/* Desktop: side-by-side split */
+@media (min-width: 900px) {
+  .cover {
+    flex-direction: row;
+  }
+
+  .cover__media {
+    flex: 0 0 50%;
+    height: 100%;
+  }
+
+  .cover__media-veil {
+    background: linear-gradient(to right,
+        rgba(28, 44, 76, 0.10) 0%, rgba(247, 241, 230, 0) 55%, rgba(247, 241, 230, 0.9) 100%);
+  }
+
+  .cover__panel {
+    flex: 1;
+    padding: 3rem;
+  }
+}
+
+/* ================================================================ */
+/* 7. CURTAIN REVEAL                                                */
+/* ================================================================ */
+.curtain {
+  position: fixed;
+  inset: 0;
+  z-index: 1500;
+  visibility: hidden;
+  pointer-events: none;
+  overflow: hidden;
+  /* cegah panel yang ter-translate bocor keluar layar */
+}
+
+.curtain__panel {
+  position: absolute;
+  top: 0;
+  width: 51%;
+  height: 100%;
+  background:
+    radial-gradient(120% 80% at 50% 0%, rgba(255, 255, 255, 0.06), transparent 60%),
+    linear-gradient(135deg, #16243f 0%, var(--navy) 45%, var(--navy-soft) 100%);
+  box-shadow: 0 0 60px rgba(0, 0, 0, 0.35);
+}
+
+.curtain__panel::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.1;
+  background-image:
+    repeating-linear-gradient(45deg, var(--gold) 0, var(--gold) 2px, transparent 2px, transparent 16px);
+}
+
+.curtain__panel--left {
+  left: 0;
+  transform: translateX(0);
+  border-right: 1px solid rgba(216, 189, 126, 0.6);
+}
+
+.curtain__panel--right {
+  right: 0;
+  transform: translateX(0);
+  border-left: 1px solid rgba(216, 189, 126, 0.6);
+}
+
+.curtain__crest {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 2;
+  width: min(82vw, 360px);
+  padding: 1.8rem 1.6rem;
+  border-radius: 18px;
+  border: 1px solid var(--gold);
+  box-shadow:
+    0 0 0 8px rgba(247, 241, 230, 0.04),
+    0 0 0 9px rgba(216, 189, 126, 0.3),
+    0 0 40px rgba(194, 162, 90, 0.25);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  opacity: 0;
+}
+
+.curtain__crest::before {
+  content: "";
+  position: absolute;
+  inset: 6px;
+  border-radius: 13px;
+  border: 1px solid rgba(216, 189, 126, 0.4);
+  pointer-events: none;
+}
+
+.curtain__label {
+  font-family: var(--font-accent);
+  font-size: 0.7rem;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.7rem;
+}
+
+.curtain__names {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+}
+
+.curtain__name {
+  font-family: var(--font-script);
+  font-size: clamp(1.5rem, 6vw, 2.1rem);
+  line-height: 1.15;
+  color: var(--gold-light);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.curtain__amp {
+  font-family: var(--font-script);
+  font-size: 1.2rem;
+  color: var(--gold);
+  margin: 0.1rem 0;
+}
+
+@media (max-width: 480px) {
+  .curtain__crest {
+    padding: 1.5rem 1.2rem;
+  }
+}
+
+/* ================================================================ */
+/* 8. SECTION SHELL                                                 */
+/* ================================================================ */
+.invitation {
+  position: relative;
+}
+
+.section {
+  position: relative;
+  padding: 5rem 1.5rem;
+  max-width: var(--maxw);
+  margin-inline: auto;
+}
+
+/* Hiasan ornamen bunga di pojok tiap section (samar, di belakang konten) */
+.section--decorated::before,
+.section--decorated::after {
+  content: "";
+  position: absolute;
+  width: clamp(110px, 24vw, 240px);
+  aspect-ratio: 600 / 840;
+  background-size: contain;
+  background-repeat: no-repeat;
+  mix-blend-mode: multiply;
+  /* Dorong background near-white menjadi putih bersih agar garis2 scan hilang */
+  filter: brightness(1.12) contrast(1.18) saturate(1.05);
+  opacity: 0.7;
+  pointer-events: none;
+  z-index: 0;
+  /* Lembutkan tepi supaya tidak ada garis batas gambar */
+  -webkit-mask-image: radial-gradient(120% 120% at 50% 50%, #000 60%, transparent 100%);
+  mask-image: radial-gradient(120% 120% at 50% 50%, #000 60%, transparent 100%);
+}
+
+.section--decorated::before {
+  top: -12px;
+  left: -14px;
+  background-image: url("assets/ornamenatas/atas.jpg");
+  background-position: top left;
+}
+
+.section--decorated::after {
+  bottom: -12px;
+  right: -14px;
+  background-image: url("assets/ornamenbawah/bawah.jpg");
+  background-position: bottom right;
+}
+
+.section--decorated>* {
+  position: relative;
+  z-index: 1;
+}
+
+.section__head {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.section__kicker {
+  font-family: var(--font-accent);
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  font-size: 0.78rem;
+  color: var(--gold);
+}
+
+.section__kicker--gold {
+  color: var(--gold-light);
+}
+
+.section__title {
+  font-family: var(--font-display);
+  color: var(--navy);
+  font-weight: 600;
+  font-size: clamp(1.8rem, 5vw, 2.7rem);
+  margin-top: 0.4rem;
+}
+
+.section__title--light {
+  color: var(--cream);
+}
+
+.section__title::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 2px;
+  margin: 0.9rem auto 0;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+
+/* ================================================================ */
+/* 9. HERO                                                          */
+/* ================================================================ */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 4rem 1.5rem;
+  overflow: hidden;
+  background: radial-gradient(circle at 50% 0%, var(--cream) 0%, var(--cream-dark) 70%);
+}
+
+.hero__bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 80% 15%, rgba(194, 162, 90, 0.12), transparent 40%),
+    radial-gradient(circle at 15% 85%, rgba(28, 44, 76, 0.08), transparent 40%);
+  pointer-events: none;
+}
+
+.hero__inner {
+  position: relative;
+  z-index: 2;
+  max-width: 640px;
+}
+
+.hero__pretitle {
+  font-family: var(--font-accent);
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--navy);
+  font-size: 0.85rem;
+  margin-bottom: 1.2rem;
+}
+
+/* --- Ornamen bunga (frame) di hero --- */
+.hero__ornament {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  z-index: 1;
+  /* di belakang teks (.hero__inner z-index:2) */
+  pointer-events: none;
+  opacity: 0.95;
+  mix-blend-mode: multiply;
+  /* latar putih ornamen menyatu dengan cream */
+  animation: ornamentFloat 5s ease-in-out infinite;
+}
+
+@keyframes ornamentFloat {
+
+  0%,
+  100% {
+    transform: scale(1.02) translateY(0) rotate(0deg);
+  }
+
+  50% {
+    transform: scale(1.04) translateY(-14px) rotate(0.6deg);
+  }
+}
+
+.hero__names {
+  font-family: var(--font-display);
+  color: var(--navy);
+  font-weight: 600;
+  font-size: clamp(2rem, 7.5vw, 3.6rem);
+  line-height: 1.15;
+  letter-spacing: 0.01em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hero__name {
+  text-shadow: 0 1px 1px rgba(247, 241, 230, 0.6);
+}
+
+.hero__amp {
+  font-family: var(--font-script);
+  color: var(--gold);
+  font-weight: 400;
+  font-size: 0.7em;
+  margin: 0.05em 0;
+}
+
+.hero__divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  margin: 1.4rem 0;
+}
+
+.hero__divider span {
+  height: 1px;
+  width: 60px;
+  background: var(--gold);
+  display: inline-block;
+}
+
+.hero__divider i {
+  color: var(--gold);
+  font-style: normal;
+}
+
+.hero__date {
+  font-size: 1rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--navy-soft);
+}
+
+.hero__verse {
+  margin-top: 2.2rem;
+  font-family: var(--font-display);
+  font-style: italic;
+  color: var(--muted);
+  font-size: 1.02rem;
+  line-height: 1.9;
+}
+
+.hero__verse cite {
+  display: block;
+  margin-top: 0.8rem;
+  font-style: normal;
+  font-size: 0.82rem;
+  letter-spacing: 0.1em;
+  color: var(--gold);
+}
+
+/* ================================================================ */
+/* 10. GALLERY                                                      */
+/* ================================================================ */
+.gallery__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.4rem;
+  margin-bottom: 3rem;
+}
+
+.gallery__item {
+  overflow: hidden;
+  border: 3px solid var(--gold);
+  box-shadow: var(--shadow-sm);
+  aspect-ratio: 3 / 4;
+}
+
+.gallery__item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.gallery__item:hover img {
+  transform: scale(1.1);
+}
+
+.gallery__item--a {
+  border-radius: 50% 50% 6px 6px;
+}
+
+.gallery__item--b {
+  border-radius: 200px 200px 6px 6px;
+  transform: translateY(20px);
+}
+
+.gallery__item--c {
+  border-radius: 50% 50% 6px 6px;
+}
+
+.gallery__swiper {
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--gold);
+}
+
+.gallery__swiper .swiper-slide {
+  aspect-ratio: 16 / 10;
+}
+
+.gallery__swiper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.gallery__swiper .swiper-pagination-bullet-active {
+  background: var(--gold);
+}
+
+.gallery__swiper .swiper-button-prev,
+.gallery__swiper .swiper-button-next {
+  color: var(--gold);
+}
+
+/* ================================================================ */
+/* 10c. VIDEO                                                       */
+/* ================================================================ */
+.video__frame {
+  position: relative;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--gold);
+  box-shadow: var(--shadow);
+  background: #000;
+  line-height: 0;
+  max-width: 380px;
+  /* video potret -> dibatasi lebarnya */
+  margin: 0 auto;
+}
+
+.video__frame video {
+  display: block;
+  width: 100%;
+  aspect-ratio: 9 / 16;
+  /* potret */
+  object-fit: contain;
+  /* tampilkan utuh tanpa terpotong */
+  background: #000;
+}
+
+/* ================================================================ */
+/* 10b. COUPLE (mempelai)                                           */
+/* ================================================================ */
+.couple__grid {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 1.6rem;
+}
+
+.couple__card {
+  text-align: center;
+  background: #fff;
+  border: 1px solid var(--beige);
+  border-radius: var(--radius);
+  padding: 2rem 1.6rem 2.2rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.couple__photo {
+  width: 150px;
+  height: 150px;
+  margin: 0 auto 1.2rem;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid var(--gold);
+}
+
+.couple__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.couple__name {
+  font-family: var(--font-display);
+  color: var(--navy);
+  font-size: 1.4rem;
+  line-height: 1.25;
+}
+
+.couple__role {
+  font-family: var(--font-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: 0.72rem;
+  color: var(--gold);
+  margin: 0.4rem 0 0.8rem;
+}
+
+.couple__parents {
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.couple__amp {
+  color: var(--gold);
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.couple__amp svg {
+  width: 46px;
+  height: auto;
+  animation: heartBeat 1.6s ease-in-out infinite;
+}
+
+@keyframes heartBeat {
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  15% {
+    transform: scale(1.15);
+  }
+
+  30% {
+    transform: scale(1);
+  }
+
+  45% {
+    transform: scale(1.1);
+  }
+}
+
+@media (max-width: 768px) {
+  .couple__grid {
+    grid-template-columns: 1fr;
+    justify-items: center;
+  }
+
+  .couple__card {
+    width: 100%;
+    max-width: 340px;
+  }
+
+  .couple__amp {
+    margin: -0.2rem auto;
+    text-align: center;
+  }
+}
+
+/* ================================================================ */
+/* 11. DETAIL ACARA                                                 */
+/* ================================================================ */
+.detail__single {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.detail__single .detail__card {
+  max-width: 460px;
+  width: 100%;
+}
+
+.detail__map {
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--gold);
+  box-shadow: var(--shadow);
+  line-height: 0;
+}
+
+.detail__map iframe {
+  display: block;
+  width: 100%;
+}
+
+.detail__card {
+  background: #fff;
+  border: 1px solid var(--beige);
+  border-top: 4px solid var(--gold);
+  border-radius: var(--radius);
+  padding: 2.4rem 1.8rem;
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+}
+
+.detail__icon {
+  font-size: 2rem;
+  color: var(--gold);
+  margin-bottom: 0.8rem;
+}
+
+.detail__card-title {
+  font-family: var(--font-display);
+  color: var(--navy);
+  font-size: 1.5rem;
+  margin-bottom: 0.8rem;
+}
+
+.detail__when {
+  font-weight: 500;
+  color: var(--navy-soft);
+}
+
+.detail__time {
+  color: var(--muted);
+  margin-bottom: 0.8rem;
+}
+
+.detail__place {
+  color: var(--ink);
+  margin-bottom: 1.4rem;
+}
+
+/* ================================================================ */
+/* 12. COUNTDOWN                                                    */
+/* ================================================================ */
+.countdown-wrap {
+  position: relative;
+}
+
+.countdown {
+  position: relative;
+  overflow: hidden;
+  background: var(--navy);
+  color: var(--cream);
+  padding: 5rem 1.5rem;
+  text-align: center;
+}
+
+.countdown__grid {
+  display: flex;
+  justify-content: center;
+  gap: 1.2rem;
+  flex-wrap: wrap;
+}
+
+.countdown__unit {
+  min-width: 90px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--gold);
+  border-radius: var(--radius);
+  padding: 1.3rem 0.8rem;
+}
+
+.countdown__unit span {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 2.4rem;
+  color: var(--gold-light);
+  line-height: 1;
+}
+
+.countdown__unit small {
+  display: block;
+  margin-top: 0.5rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--cream);
+}
+
+/* ================================================================ */
+/* 13. RSVP                                                         */
+/* ================================================================ */
+.rsvp {
+  text-align: center;
+}
+
+.rsvp__text {
+  max-width: 620px;
+  margin: 0 auto 2rem;
+  color: var(--muted);
+}
+
+/* ================================================================ */
+/* 13a. HADIAH / AMPLOP DIGITAL (kartu kredit-style)                */
+/* ================================================================ */
+.gift__note {
+  max-width: 620px;
+  margin: 0 auto 2.6rem;
+  text-align: center;
+  color: var(--muted);
+}
+
+.gift__cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.6rem;
+}
+
+.gcard {
+  position: relative;
+  width: 350px;
+  max-width: 100%;
+  aspect-ratio: 1.586;
+  /* rasio kartu standar ISO */
+  border-radius: 16px;
+  padding: 1.5rem 1.6rem;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  box-shadow:
+    0 22px 45px rgba(15, 23, 42, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+  isolation: isolate;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s ease;
+}
+
+.gcard:hover {
+  transform: translateY(-8px);
+  box-shadow:
+    0 32px 60px rgba(15, 23, 42, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+}
+
+/* Warna brand */
+.gcard--bca {
+  background:
+    radial-gradient(circle at 85% 12%, rgba(255, 255, 255, 0.18), transparent 45%),
+    linear-gradient(135deg, #003a8c 0%, #0556c7 48%, #00256b 100%);
+}
+
+.gcard--mandiri {
+  background:
+    radial-gradient(circle at 85% 12%, rgba(255, 215, 130, 0.22), transparent 45%),
+    linear-gradient(135deg, #001b3d 0%, #0a3d70 55%, #001129 100%);
+}
+
+/* Pola guilloche halus (tekstur keamanan kartu) */
+.gcard__guilloche {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: 0.5;
+  background-image:
+    repeating-radial-gradient(circle at 18% 120%, transparent 0 16px, rgba(255, 255, 255, 0.05) 16px 17px),
+    repeating-radial-gradient(circle at 95% -20%, transparent 0 20px, rgba(255, 255, 255, 0.045) 20px 21px);
+  pointer-events: none;
+}
+
+/* Kilau bergerak saat hover */
+.gcard__sheen {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: linear-gradient(115deg, transparent 35%, rgba(255, 255, 255, 0.28) 50%, transparent 65%);
+  transform: translateX(-130%) skewX(-12deg);
+  transition: transform 1s ease;
+  pointer-events: none;
+}
+
+.gcard:hover .gcard__sheen {
+  transform: translateX(130%) skewX(-12deg);
+}
+
+.gcard>*:not(.gcard__guilloche):not(.gcard__sheen) {
+  position: relative;
+  z-index: 1;
+}
+
+.gcard__top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.gcard__bank {
+  font-family: var(--font-accent);
+  font-size: 1.3rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.gcard--mandiri .gcard__bank {
+  color: #ffd27a;
+}
+
+.gcard__wave {
+  width: 22px;
+  height: 22px;
+  color: rgba(255, 255, 255, 0.85);
+  transform: rotate(0deg);
+}
+
+/* Chip EMV realistis */
+.gcard__chip {
+  width: 46px;
+  height: 34px;
+  margin: 1.1rem 0 1rem;
+  border-radius: 7px;
+  background: linear-gradient(135deg, #f6e7b0 0%, #d9b85f 45%, #b6913f 100%);
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.18), 0 1px 1px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  padding: 5px 6px;
+  position: relative;
+}
+
+.gcard__chip::before {
+  content: "";
+  position: absolute;
+  top: 7px;
+  bottom: 7px;
+  left: 50%;
+  width: 1px;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.gcard__chip i {
+  height: 1px;
+  background: rgba(0, 0, 0, 0.32);
+  border-radius: 1px;
+}
+
+/* Nomor rekening (emboss) */
+.gcard__number {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #fff;
+  padding: 0.55rem 0.85rem;
+  border-radius: 10px;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.25s ease, border-color 0.25s ease, transform 0.15s ease;
+}
+
+.gcard__number:hover {
+  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+.gcard__number:active {
+  transform: scale(0.985);
+}
+
+.gcard__number.is-copied {
+  background: rgba(110, 231, 183, 0.22);
+  border-color: rgba(110, 231, 183, 0.5);
+}
+
+.gcard__digits {
+  font-family: "Courier New", ui-monospace, monospace;
+  font-size: 1.32rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.35), 0 -1px 1px rgba(0, 0, 0, 0.35);
+}
+
+.gcard__copy {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  flex: 0 0 auto;
+  font-size: 0.66rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+.gcard__copy em {
+  font-style: normal;
+}
+
+.gcard__bottom {
+  margin-top: auto;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.gcard__label {
+  display: block;
+  font-size: 0.58rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  opacity: 0.65;
+}
+
+.gcard__holder {
+  font-family: var(--font-accent);
+  font-size: 0.92rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-top: 0.25rem;
+  line-height: 1.25;
+}
+
+.gcard__logo {
+  font-family: var(--font-accent);
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: 0.1em;
+  opacity: 0.9;
+  white-space: nowrap;
+}
+
+.gcard--mandiri .gcard__logo {
+  color: #ffd27a;
+}
+
+.gift__confirm {
+  text-align: center;
+  margin-top: 2.6rem;
+}
+
+.gift__confirm-text {
+  color: var(--muted);
+  margin-bottom: 1rem;
+  font-size: 0.92rem;
+}
+
+@media (max-width: 400px) {
+  .gcard {
+    padding: 1.3rem 1.3rem;
+  }
+
+  .gcard__digits {
+    font-size: 1.12rem;
+    letter-spacing: 0.1em;
+  }
+}
+
+/* ================================================================ */
+/* 13b. UCAPAN (wishes)                                             */
+/* ================================================================ */
+.wishes {}
+
+.wish-form {
+  max-width: 620px;
+  margin: 0 auto 2.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.wish-form__row {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 0.9rem;
+}
+
+.wish-form__input {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--ink);
+  background: #fff;
+  border: 1px solid var(--beige);
+  border-radius: 12px;
+  padding: 0.85rem 1rem;
+  width: 100%;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.wish-form__input:focus {
+  outline: none;
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(194, 162, 90, 0.18);
+}
+
+.wish-form__select {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23c2a25a' d='M6 8 0 0h12z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  padding-right: 2.4rem;
+  cursor: pointer;
+}
+
+.wish-form__textarea {
+  resize: vertical;
+  min-height: 92px;
+  line-height: 1.6;
+}
+
+.wish-form__submit {
+  align-self: center;
+  margin-top: 0.3rem;
+}
+
+.wish-form__status {
+  text-align: center;
+  font-size: 0.85rem;
+  min-height: 1.2em;
+  color: var(--muted);
+}
+
+.wish-form__status.is-ok {
+  color: #2e7d32;
+}
+
+.wish-form__status.is-err {
+  color: #b3261e;
+}
+
+.wishes__list {
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.wishes__count {
+  text-align: center;
+  font-family: var(--font-accent);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-size: 0.72rem;
+  color: var(--gold);
+  margin-bottom: 1.2rem;
+}
+
+.wishes__items {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.wishes__empty {
+  text-align: center;
+  color: var(--muted);
+  font-style: italic;
+  padding: 1rem;
+}
+
+.wish {
+  background: #fff;
+  border: 1px solid var(--beige);
+  border-left: 3px solid var(--gold);
+  border-radius: 14px;
+  padding: 1.1rem 1.3rem;
+  box-shadow: var(--shadow-sm);
+  text-align: left;
+}
+
+.wish__head {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 0.6rem;
+}
+
+.wish__avatar {
+  flex: 0 0 auto;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--navy);
+  color: var(--gold-light);
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+}
+
+.wish__name {
+  font-family: var(--font-display);
+  color: var(--navy);
+  font-size: 1.05rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.wish__meta {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-top: 0.15rem;
+}
+
+.wish__badge {
+  font-size: 0.66rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.15rem 0.6rem;
+  border-radius: 999px;
+  color: var(--muted);
+  background: var(--cream);
+  border: 1px solid var(--beige);
+}
+
+.wish__time {
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+
+.wish__msg {
+  color: var(--ink);
+  font-size: 0.95rem;
+  line-height: 1.65;
+  word-break: break-word;
+}
+
+.wishes__more {
+  display: flex;
+  margin: 1.6rem auto 0;
+}
+
+@media (max-width: 480px) {
+  .wish-form__row {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ================================================================ */
+/* 14. FOOTER                                                       */
+/* ================================================================ */
+.footer {
+  position: relative;
+  text-align: center;
+  padding: 4.5rem 1.5rem;
+  background: var(--cream-dark);
+  overflow: hidden;
+}
+
+.footer__inner {
+  position: relative;
+  z-index: 2;
+}
+
+.footer__thanks {
+  font-family: var(--font-accent);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-size: 0.85rem;
+}
+
+.footer__msg {
+  max-width: 520px;
+  margin: 0.8rem auto 1.6rem;
+  color: var(--muted);
+}
+
+.footer__names {
+  font-family: var(--font-script);
+  color: var(--navy);
+  font-size: clamp(1.9rem, 7vw, 2.8rem);
+  font-weight: 400;
+  line-height: 1.15;
+}
+
+.footer__names .amp {
+  color: var(--gold);
+}
+
+.footer__ornament {
+  color: var(--gold);
+  font-size: 1.4rem;
+  margin: 1rem 0;
+  letter-spacing: 0.5rem;
+}
+
+.footer__credit {
+  font-size: 0.78rem;
+  color: var(--muted);
+  letter-spacing: 0.05em;
+}
+
+.footer__credit a {
+  color: var(--gold);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.footer__credit a:hover {
+  text-decoration: underline;
+}
+
+/* ================================================================ */
+/* 15. RESPONSIVE                                                   */
+/* ================================================================ */
+
+/* --- Tablet ke bawah --- */
+@media (max-width: 768px) {
+  .section {
+    padding: 3.5rem 1.2rem;
+  }
+
+  .section__head {
+    margin-bottom: 2.2rem;
+  }
+
+  .gallery__grid {
+    grid-template-columns: 1fr;
+    gap: 1.6rem;
+    max-width: 320px;
+    margin-inline: auto;
+  }
+
+  .gallery__item--b {
+    transform: none;
+  }
+
+  .gallery__swiper .swiper-slide {
+    aspect-ratio: 4 / 3;
+  }
+
+  .countdown {
+    padding: 3.5rem 1.2rem;
+  }
+
+  .countdown__grid {
+    gap: 0.7rem;
+  }
+
+  .countdown__unit {
+    min-width: 0;
+    flex: 1 1 64px;
+    padding: 1rem 0.4rem;
+  }
+
+  .countdown__unit span {
+    font-size: 1.7rem;
+  }
+
+  .detail__card {
+    padding: 2rem 1.4rem;
+  }
+
+  .detail__map iframe {
+    height: 300px;
+  }
+
+  .couple__photo {
+    width: 130px;
+    height: 130px;
+  }
+}
+
+/* --- HP kecil --- */
+@media (max-width: 400px) {
+  .section {
+    padding: 3rem 1rem;
+  }
+
+  .cover__panel {
+    padding: 1.8rem 1.1rem 2.4rem;
+  }
+
+  .countdown__unit {
+    flex-basis: 56px;
+  }
+
+  .countdown__unit span {
+    font-size: 1.4rem;
+  }
+
+  .countdown__unit small {
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+  }
+
+  .btn {
+    padding: 0.8rem 1.6rem;
+    font-size: 0.78rem;
+  }
+}
+
+/* --- Desktop --- */
+@media (min-width: 769px) {
+  .gallery__item--b {
+    aspect-ratio: 3 / 4.4;
+  }
+}
+
+/* ---------- REDUCED MOTION ---------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+}

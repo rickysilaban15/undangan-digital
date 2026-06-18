@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="description" content="Undangan Pernikahan Wawan & Santi - Senin, 13 Juli 2026" />
+  <title>The Wedding Of Wawan & Santi</title>
+
+  <!-- ===== Open Graph / WhatsApp / Facebook preview ===== -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Undangan Pernikahan Wawan & Santi" />
+  <meta property="og:description" content="Dengan sukacita kami mengundang Anda. Senin, 13 Juli 2026 — Gereja Katolik St. Paulus, Huta Manggis." />
+  <!-- GANTI dengan URL lengkap tempat undangan di-hosting -->
+  <meta property="og:url" content="https://harrasih.com/" />
+  <meta property="og:image" content="https://harrasih.com/assets/og-image.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:site_name" content="Undangan Digital" />
+  <meta property="og:locale" content="id_ID" />
+
+  <!-- ===== Twitter card ===== -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Undangan Pernikahan Wawan & Santi" />
+  <meta name="twitter:description" content="Senin, 13 Juli 2026 — Gereja Katolik St. Paulus, Huta Manggis." />
+  <meta name="twitter:image" content="https://harrasih.com/assets/og-image.jpg" />
+
+  <!-- Google Fonts: Great Vibes (script) · Playfair Display + Cinzel (serif) · Poppins (sans) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Poppins:wght@300;400;500;600&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Swiper.js (gallery slider) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+  <!-- Local styles -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="is-locked">
+  <!-- ============================================================= -->
+  <!-- BACKGROUND MUSIC (local audio + toggle)                       -->
+  <!-- ============================================================= -->
+  <audio id="bg-music" loop preload="auto" playsinline>
+    <source src="assets/music.mp3" type="audio/mpeg" />
+  </audio>
+
+  <button id="music-toggle" class="music-toggle" aria-label="Putar / hentikan musik" title="Musik">
+    <span class="music-icon">&#9835;</span>
+  </button>
+
+  <!-- ============================================================= -->
+  <!-- 1. COVER / AMPLOP (fullscreen)                                -->
+  <!-- ============================================================= -->
+  <section id="opening" class="cover">
+    <!-- Left: photo with gold stroke + ink splatter accents -->
+    <div class="cover__media" data-cover="media">
+      <img
+        class="cover__photo"
+        src="assets/WhatsApp%20Image%202026-06-19%20at%2000.16.01.jpeg"
+        alt="Wawan & Santi"
+      />
+      <span class="cover__gold-stroke" aria-hidden="true"></span>
+      <span class="cover__splatter" aria-hidden="true"></span>
+      <span class="cover__media-veil" aria-hidden="true"></span>
+    </div>
+
+    <!-- Right: cream panel with invitation text -->
+    <div class="cover__panel">
+      <div class="cover__panel-inner">
+        <p class="cover__eyebrow" data-cover="text">Undangan Pernikahan</p>
+        <p class="cover__invite" data-cover="text">
+          Kami mengundang Bapak/Ibu/Saudara/i untuk<br />
+          hadir dalam acara pernikahan kami:
+        </p>
+
+        <span class="cover__divider" data-cover="text" aria-hidden="true"></span>
+
+        <h1 class="cover__names" data-cover="text">
+          <span id="cover-groom" class="cover__name">Wawan Roy Agtus Sitinjak</span>
+          <span class="cover__amp">&amp;</span>
+          <span id="cover-bride" class="cover__name">Rosanti Marbun</span>
+        </h1>
+
+        <div class="cover__event" data-cover="text">
+          <p class="cover__date" id="cover-date">Senin, 13 Juli 2026</p>
+          <p class="cover__venue" id="cover-venue">07.00 WIB &nbsp;|&nbsp; Gereja Katolik St. Paulus</p>
+        </div>
+
+        <div class="cover__guest" data-cover="text">
+          <p class="cover__guest-label">Kepada Yth.</p>
+          <p class="cover__guest-name" id="guest-name">Bapak / Ibu / Saudara/i</p>
+        </div>
+
+        <button id="open-invitation" class="btn btn--primary" data-cover="text">
+          <span>Buka Undangan</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================= -->
+  <!-- CURTAIN ("gorden") reveal overlay                             -->
+  <!-- ============================================================= -->
+  <div id="curtain" class="curtain" aria-hidden="true">
+    <div class="curtain__panel curtain__panel--left"></div>
+    <div class="curtain__panel curtain__panel--right"></div>
+    <div class="curtain__crest">
+      <span class="curtain__label">The Wedding Of</span>
+      <span class="curtain__names">
+        <span class="curtain__name" id="curtain-groom">Wawan Roy Agtus Sitinjak</span>
+        <span class="curtain__amp">&amp;</span>
+        <span class="curtain__name" id="curtain-bride">Rosanti Marbun</span>
+      </span>
+    </div>
+  </div>
+
+  <!-- ============================================================= -->
+  <!-- MAIN INVITATION                                               -->
+  <!-- ============================================================= -->
+  <main id="invitation" class="invitation">
+    <!-- ----------------------------------------------------------- -->
+    <!-- 2. HERO SECTION                                             -->
+    <!-- ----------------------------------------------------------- -->
+    <section id="hero" class="hero">
+      <div class="hero__bg" aria-hidden="true"></div>
+      <div class="gorga-overlay gorga-overlay--light" aria-hidden="true"></div>
+
+      <!-- Ornamen bunga (frame) -->
+      <img
+        class="hero__ornament"
+        src="assets/ornamen/hero-ornament.jpg"
+        alt=""
+        aria-hidden="true"
+        decoding="async"
+      />
+
+      <div class="hero__inner">
+        <p class="hero__pretitle" data-hero="1">The Wedding Of</p>
+
+        <h1 class="hero__names">
+          <span class="hero__name" data-hero="3" id="hero-groom">Wawan Roy Agtus Sitinjak</span>
+          <span class="hero__amp" data-hero="4">&amp;</span>
+          <span class="hero__name" data-hero="5" id="hero-bride">Rosanti Marbun</span>
+        </h1>
+
+        <div class="hero__divider" data-hero="6" aria-hidden="true">
+          <span></span><i>&#10086;</i><span></span>
+        </div>
+
+        <p class="hero__date" data-hero="7" id="hero-date">Senin, 13 Juli 2026</p>
+
+        <blockquote class="hero__verse" data-hero="8">
+          &ldquo;Demikianlah mereka bukan lagi dua, melainkan satu. Karena itu, apa yang
+          telah dipersatukan Allah, tidak boleh diceraikan manusia.&rdquo;
+          <cite>&mdash; Matius 19:6</cite>
+        </blockquote>
+      </div>
+    </section>
+
+    <!-- ----------------------------------------------------------- -->
+    <!-- 2b. MEMPELAI (full names + parents)                         -->
+    <!-- ----------------------------------------------------------- -->
+    <section id="couple" class="section section--decorated couple">
+      <div class="section__head" data-aos="fade-up">
+        <span class="section__kicker">Horas! Dengan sukacita</span>
+        <h2 class="section__title">Kedua Mempelai</h2>
+      </div>
+
+      <div class="couple__grid">
+        <article class="couple__card" data-aos="fade-right">
+          <div class="couple__photo">
+            <img src="assets/WhatsApp%20Image%202026-06-19%20at%2000.18.05.jpeg" alt="Mempelai pria" loading="lazy" decoding="async" />
+          </div>
+          <h3 class="couple__name" id="groom-full">Wawan Roy Agtus Sitinjak</h3>
+          <p class="couple__role">Mempelai Pria</p>
+          <p class="couple__parents" id="groom-parents">
+            Putra dari Bapak Mangatur Sitinjak &amp; Ibu Martinal Nainggolan
+          </p>
+        </article>
+
+        <div class="couple__amp" aria-hidden="true" data-aos="zoom-in">
+          <svg viewBox="0 0 32 29" xmlns="http://www.w3.org/2000/svg">
+            <path d="M16 28.5C16 28.5 1.5 19.8 1.5 9.8C1.5 4.9 5.3 1.5 9.6 1.5C12.4 1.5 14.8 3 16 5.3C17.2 3 19.6 1.5 22.4 1.5C26.7 1.5 30.5 4.9 30.5 9.8C30.5 19.8 16 28.5 16 28.5Z"
+              fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+          </svg>
+        </div>
+
+        <article class="couple__card" data-aos="fade-left">
+          <div class="couple__photo">
+            <img src="assets/WhatsApp%20Image%202026-06-19%20at%2000.19.00.jpeg" alt="Mempelai wanita" loading="lazy" decoding="async" />
+          </div>
+          <h3 class="couple__name" id="bride-full">Rosanti Marbun</h3>
+          <p class="couple__role">Mempelai Wanita</p>
+          <p class="couple__parents" id="bride-parents">
+            Putri dari Bapak Perius Buaton &amp; Ibu Mesri Samosir
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ----------------------------------------------------------- -->
+    <!-- 3. GALLERY SECTION                                          -->
+    <!-- ----------------------------------------------------------- -->
+    <section id="gallery" class="section gallery">
+      <div class="section__head" data-aos="fade-up">
+        <span class="section__kicker">Galeri</span>
+        <h2 class="section__title">Momen Bahagia</h2>
+      </div>
+
+      <!-- Framed photos sliding in from left & right -->
+      <div class="gallery__grid">
+        <figure class="gallery__item gallery__item--a" data-aos="fade-right">
+          <img src="assets/WhatsApp%20Image%202026-06-19%20at%2000.20.05.jpeg" alt="Foto pasangan 1" loading="lazy" decoding="async" />
+        </figure>
+        <figure class="gallery__item gallery__item--b" data-aos="zoom-in" data-aos-delay="100">
+          <img src="assets/WhatsApp%20Image%202026-06-19%20at%2000.20.57.jpeg" alt="Foto pasangan 2" loading="lazy" decoding="async" />
+        </figure>
+        <figure class="gallery__item gallery__item--c" data-aos="fade-left">
+          <img src="assets/WhatsApp%20Image%202026-06-19%20at%2000.21.54.jpeg" alt="Foto pasangan 3" loading="lazy" decoding="async" />
+        </figure>
+      </div>
+
+      <!-- Swiper slider -->
+      <div class="swiper gallery__swiper" data-aos="fade-up">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide">
+            <img src="assets/WhatsApp%20Image%202026-06-19%20at%2000.22.38.jpeg" alt="Slide 1" loading="lazy" decoding="async" />
+          </div>
+          <div class="swiper-slide">
+            <img src="assets/WhatsApp%20Image%202026-06-19%20at%2000.23.24.jpeg" alt="Slide 2" loading="lazy" decoding="async" />
+          </div>
+          <div class="swiper-slide">
+            <img src="assets/WhatsApp%20Image%202026-06-19%20at%2000.23.24%20(1).jpeg" alt="Slide 3" loading="lazy" decoding="async" />
+          </div>
+        </div>
+        <div class="swiper-pagination"></div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+      </div>
+    </section>
+
+    <!-- ----------------------------------------------------------- -->
+    <!-- 3b. VIDEO SECTION                                           -->
+    <!-- ----------------------------------------------------------- -->
+    <section id="video" class="section section--decorated video">
+      <div class="section__head" data-aos="fade-up">
+        <span class="section__kicker">Cinematic</span>
+        <h2 class="section__title">Video Prewedding</h2>
+      </div>
+
+      <div class="video__frame" data-aos="zoom-in">
+        <video
+          src="assets/video.mp4"
+          controls
+          playsinline
+          preload="none"
+          poster="assets/WhatsApp%20Image%202026-06-19%20at%2000.16.01.jpeg"
+        ></video>
+      </div>
+    </section>
+
+    <!-- ----------------------------------------------------------- -->
+    <!-- 4. DETAIL ACARA                                             -->
+    <!-- ----------------------------------------------------------- -->
+    <section id="detail" class="section section--decorated detail">
+      <div class="section__head" data-aos="fade-up">
+        <span class="section__kicker">Wujud Syukur</span>
+        <h2 class="section__title">Detail Acara</h2>
+      </div>
+
+      <div class="detail__single">
+        <article class="detail__card" data-aos="fade-up">
+          <div class="detail__icon" aria-hidden="true">&#10013;</div>
+          <h3 class="detail__card-title">Pemberkatan Pernikahan</h3>
+          <p class="detail__when" id="ceremony-date">Senin, 13 Juli 2026</p>
+          <p class="detail__time" id="ceremony-time">07.00 WIB &ndash; selesai</p>
+          <p class="detail__place" id="ceremony-place">
+            Gereja Katolik Stasi Santo Paulus, Huta Manggis<br />
+            Kampung Manggis, Tebing Syahbandar, Sumatra Utara
+          </p>
+          <a class="btn btn--ghost" id="ceremony-map" href="#" target="_blank" rel="noopener">
+            Buka di Google Maps
+          </a>
+        </article>
+      </div>
+
+      <!-- Embedded map -->
+      <div class="detail__map" data-aos="fade-up" data-aos-delay="100">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4205.9811541681875!2d99.27265707520176!3d3.356025351845643!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3033df0d2297ad55%3A0xd66188ea97cde6a0!2sGereja%20Katolik%20Stasi%20Santo%20Paulus%2C%20Huta%20Manggis!5e1!3m2!1sid!2sid!4v1781803037687!5m2!1sid!2sid"
+          width="100%"
+          height="380"
+          style="border:0;"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Lokasi Gereja Katolik Stasi Santo Paulus, Huta Manggis"
+        ></iframe>
+      </div>
+    </section>
+
+    <!-- ----------------------------------------------------------- -->
+    <!-- 5. COUNTDOWN TIMER                                          -->
+    <!-- ----------------------------------------------------------- -->
+    <section id="countdown" class="countdown-wrap">
+      <div class="countdown">
+        <div class="gorga-overlay gorga-overlay--light" aria-hidden="true"></div>
+        <div class="section__head" data-aos="fade-up">
+          <span class="section__kicker section__kicker--gold">Menuju Hari Bahagia</span>
+          <h2 class="section__title section__title--light">Menghitung Hari</h2>
+        </div>
+
+        <div class="countdown__grid" data-aos="zoom-in">
+          <div class="countdown__unit"><span id="cd-days">00</span><small>Hari</small></div>
+          <div class="countdown__unit"><span id="cd-hours">00</span><small>Jam</small></div>
+          <div class="countdown__unit"><span id="cd-minutes">00</span><small>Menit</small></div>
+          <div class="countdown__unit"><span id="cd-seconds">00</span><small>Detik</small></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ----------------------------------------------------------- -->
+    <!-- 6. RSVP SECTION                                             -->
+    <!-- ----------------------------------------------------------- -->
+    <section id="rsvp" class="section section--decorated rsvp">
+      <div class="section__head" data-aos="fade-up">
+        <span class="section__kicker">Konfirmasi Kehadiran</span>
+        <h2 class="section__title">RSVP</h2>
+      </div>
+      <p class="rsvp__text" data-aos="fade-up" data-aos-delay="80">
+        Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila
+        Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu.
+        Mohon bantu kami mempersiapkan acara dengan mengisi data kehadiran Anda.
+        Klik tombol di bawah untuk mengisi formulir konfirmasi kehadiran.
+      </p>
+      <a
+        class="btn btn--primary"
+        id="rsvp-link"
+        href="https://docs.google.com/forms/d/e/1FAIpQLSfZKZj7tfiwTCHLDEAuBYsfa8RA2pfngG33cIZmBtni3DEjJA/viewform?usp=sharing&ouid=117546022810231307022"
+        target="_blank"
+        rel="noopener"
+        data-aos="fade-up"
+        data-aos-delay="150"
+      >
+        <span>Isi Formulir Kehadiran</span>
+      </a>
+    </section>
+
+    <!-- ----------------------------------------------------------- -->
+    <!-- 6a. HADIAH / AMPLOP DIGITAL                                 -->
+    <!-- ----------------------------------------------------------- -->
+    <section id="gift" class="section section--decorated gift">
+      <div class="section__head" data-aos="fade-up">
+        <span class="section__kicker">Tanda Kasih</span>
+        <h2 class="section__title">Hadiah Pernikahan</h2>
+      </div>
+
+      <p class="gift__note" id="gift-note" data-aos="fade-up" data-aos-delay="80"></p>
+
+      <div class="gift__cards" id="gift-cards"></div>
+
+      <div class="gift__confirm" data-aos="fade-up" data-aos-delay="160">
+        <p class="gift__confirm-text">
+          Sudah mengirim hadiah? Kirimkan konfirmasi atau buktinya kepada kami.
+        </p>
+        <a id="gift-wa" class="btn btn--ghost" href="#" target="_blank" rel="noopener">
+          <span>Konfirmasi via WhatsApp</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- ----------------------------------------------------------- -->
+    <!-- 6b. UCAPAN & DOA (live)                                     -->
+    <!-- ----------------------------------------------------------- -->
+    <section id="wishes" class="section section--decorated wishes">
+      <div class="section__head" data-aos="fade-up">
+        <span class="section__kicker">Kirim Doa &amp; Restu</span>
+        <h2 class="section__title">Ucapan</h2>
+      </div>
+
+      <form id="wish-form" class="wish-form" data-aos="fade-up" data-aos-delay="80" autocomplete="off">
+        <div class="wish-form__row">
+          <input
+            type="text"
+            id="wish-name"
+            class="wish-form__input"
+            name="name"
+            placeholder="Nama Anda"
+            maxlength="60"
+            required
+          />
+          <select id="wish-attend" class="wish-form__input wish-form__select" name="attend">
+            <option value="Hadir">Hadir</option>
+            <option value="Masih Ragu">Masih Ragu</option>
+            <option value="Tidak Hadir">Tidak Hadir</option>
+          </select>
+        </div>
+        <textarea
+          id="wish-message"
+          class="wish-form__input wish-form__textarea"
+          name="message"
+          placeholder="Tuliskan ucapan & doa Anda untuk kedua mempelai..."
+          maxlength="500"
+          rows="3"
+          required
+        ></textarea>
+        <button type="submit" id="wish-submit" class="btn btn--primary wish-form__submit">
+          <span>Kirim Ucapan</span>
+        </button>
+        <p id="wish-status" class="wish-form__status" role="status" aria-live="polite"></p>
+      </form>
+
+      <div class="wishes__list" data-aos="fade-up" data-aos-delay="120">
+        <p class="wishes__count" id="wish-count"></p>
+        <ul id="wish-items" class="wishes__items"></ul>
+        <button type="button" id="wish-more" class="btn btn--ghost wishes__more" hidden>
+          <span>Muat lebih banyak</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ----------------------------------------------------------- -->
+    <!-- 7. FOOTER                                                   -->
+    <!-- ----------------------------------------------------------- -->
+    <footer class="footer">
+      <div class="gorga-overlay" aria-hidden="true"></div>
+      <div class="footer__inner" data-aos="fade-up">
+        <p class="footer__thanks">Terima Kasih</p>
+        <p class="footer__msg">
+          Atas kehadiran dan doa restu yang diberikan, kami ucapkan terima kasih.
+        </p>
+        <h3 class="footer__names">
+          <span id="footer-groom">Wawan Roy Agtus Sitinjak</span>
+          <span class="amp">&amp;</span>
+          <span id="footer-bride">Rosanti Marbun</span>
+        </h3>
+        <div class="footer__ornament" aria-hidden="true">&#10086; &#10013; &#10087;</div>
+        <p class="footer__credit">
+          by <a href="https://harrasih.com" target="_blank" rel="noopener">Harrasih.com</a> &mdash; Undangan Digital
+        </p>
+      </div>
+    </footer>
+  </main>
+
+  <!-- ============================================================= -->
+  <!-- LIBRARIES                                                     -->
+  <!-- ============================================================= -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+  <!-- Firebase (untuk fitur Ucapan live). Aman walau belum dikonfigurasi. -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+  <!-- Local script -->
+  <script src="script.js"></script>
+</body>
+</html>
