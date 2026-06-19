@@ -56,8 +56,8 @@ const CONFIG = {
       "Doa restu Anda merupakan hadiah terindah bagi kami. Namun bila berkenan " +
       "memberikan tanda kasih, dapat melalui rekening berikut.",
     cards: [
-      { bank: "BCA", variant: "BCA", number: "6880370934", holder: "Wawan Roy Agtus Sitinjak" },
-      { bank: "BCA", variant: "BCA", number: "6881246837", holder: "Rosanti Marbun" },
+      { bank: "BCA", variant: "bca", number: "6880370934", holder: "Wawan Roy Agtus Sitinjak" },
+      { bank: "BCA", variant: "bca", number: "6881246837", holder: "Rosanti Marbun" },
     ],
     whatsapp: {
       number: "6282112814139",
